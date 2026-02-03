@@ -29,7 +29,7 @@ function Compo1() {
 
      const filterdata = useMemo(() => {
           return searchvalue ? myarray.filter(
-               (item) => { console.log("filtering...."); item.includes(searchvalue); }) : (console.log("filtering...."), myarray);
+               (item) => { console.log("filtering...."); return item.includes(searchvalue); }) : (console.log("filtering...."), myarray);
      }, [searchvalue])
 
 
