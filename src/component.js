@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState,memo, useRef } from "react";
 
 function Compo1() {
+
+     console.log("parent render.....");
      const [myarray, setmyarray] = useState([]);
      const [data, setdata] = useState("");
      const [searchvalue, updatesearchvalue] = useState("");
@@ -16,21 +18,26 @@ function Compo1() {
      }
      //runs after tags are created--one time work---fisrt time when on render
      useEffect(() => {
-          console.log("component render");
+         // console.log("component render");
           fetchdata();
      }, []);
 
+    
 
      //exact filter
      //const filterdata=searchvalue?myarray.filter((item)=>item===searchvalue):myarray;
      //partial filter---computation---loop
-     //     const filterdata=searchvalue?myarray.filter(
-     //                                    (item)=>  { console.log("filtering....");item.includes(searchvalue);}):(console.log("filtering...."),myarray);
+
+     //const filterdata=useMemo(work,[variable1,variable2]); 
+     //usememo returns/to give the value/result
+     // const filterdata=useMemo( ()=>{return  work/resultvalue }   ,[variable]); 
+     
+         
 
      const filterdata = useMemo(() => {
           return searchvalue ? myarray.filter(
                (item) => { console.log("filtering...."); return item.includes(searchvalue); }) : (console.log("filtering...."), myarray);
-     }, [searchvalue])
+     }, [searchvalue]);
 
 
 
@@ -59,14 +66,17 @@ function Compo1() {
      </div>);
 }
 
-export function Namelist({mylist})
-{
-      console.log("namelist render....");
-    
-    return (  <ul>
-               {mylist.map((item, index) => <li key={index}>{item}</li>)}
 
-          </ul>)
+function Namelist({mylist})
+{
+console.log("child namelist render....");
+  return (
+    <ul>
+      {mylist.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
+  );
 }
 
 export default Compo1;//it just giving permission to be used anywhere outside
